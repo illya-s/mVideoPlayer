@@ -4,11 +4,6 @@ $(document).ready(function () {
 			this._videoWrapper = $('#mVideoWrapper');
 			this._video = $("#m-video").get(0);
 
-			this._videoSelectorWrapper = $('.m-video-selector-episode-list');
-			this._episodeSelector = function() {
-				return $('.m-video-selector-episode')
-			};
-
 			this._positionCont = $('.video-position-cont')
 
 			this._togglePlayBtn = $('#mVideoTogglePlayBtn, #mVideoBigPlayBtn, #mVideoTogglePlayArea');
@@ -21,44 +16,83 @@ $(document).ready(function () {
 			this._togglePlayBtn.on('click', () => this.togglePlay());
 			this._toggleFullscreenBtn.on('click', () => this.toggleFullscreen());
 
+			class SwitchControls {
+				constructor(parent) {
+					this.parent = parent;
 
-			this.slideIndex = 0;
-			this._videoSelectorWrapper.slick({
-				infinite: false,
-
-				arrows: true,
-				prevArrow: `<div class="prevArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 31L4 17L18 3" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
-				nextArrow: `<div class="nextArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L17 17L3 31" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
-
-				slidesToShow: 8,
-				slidesToScroll: 8
-			});
+					this._videoSelectorWrapper = $('.m-video-selector-episode-list');
+					this._episodeSelector = function() {
+						return $('.m-video-selector-episode')
+					};
 
 
-			this._episodeLastSelector = null;
-			var isDragging = false;
-			$('.m-video-selector-episode-list').on('mousedown touchstart', function () {
-				isDragging = false;
-			});
+					this.slideIndex = 0;
+					this._videoSelectorWrapper.slick({
+						infinite: false,
 
-			$('.m-video-selector-episode-list').on('mousemove touchmove', function () {
-				isDragging = true;
-			});
+						arrows: true,
+						prevArrow: `<div class="prevArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 31L4 17L18 3" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
+						nextArrow: `<div class="nextArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L17 17L3 31" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
 
-			$(document).on('click', '.m-video-selector-episode', (e) => {
-				if (isDragging) return;
+						slidesToShow: 6,
+						slidesToScroll: 6
+					});
 
-				if (!$(e.target).closest(this._episodeLastSelector).length) {
-					if (this._episodeLastSelector) {
-						this._episodeSelector().removeClass('active')
-					}
 
-					$(e.target).addClass('active')
-					this._episodeLastSelector = $(e.target);
+					this._episodeLastSelector = null;
+					var isDragging = false;
+					this._videoSelectorWrapper.on('mousedown touchstart', function () {
+						isDragging = false;
+					});
 
-					this.setSrc($(e.target).data('url'))
+					this._videoSelectorWrapper.on('mousemove touchmove', function () {
+						isDragging = true;
+					});
+
+					$(document).on('click', '.m-video-selector-episode', (e) => {
+						if (isDragging) return;
+
+						if (!$(e.target).closest(this._episodeLastSelector).length) {
+							if (this._episodeLastSelector) {
+								this._episodeSelector().removeClass('active')
+							}
+
+							$(e.target).addClass('active')
+							this._episodeLastSelector = $(e.target);
+
+							this.parent.src($(e.target).data('url'))
+						}
+					});
+
+					$(document).on('fullscreenchange', () => {
+						this._videoSelectorWrapper.slick('setPosition');
+					});
 				}
-			});
+
+				clearList() {
+					this._episodeSelector().each((i, element) => {
+						this._videoSelectorWrapper.slick('slickRemove', 0);
+					});
+					this.parent.src("#")
+				}
+
+				setList(li) {
+					this.clearList()
+
+					for (let index = 0; index < li.length; index++) {
+						const element = li[index];
+						
+						var el = $('<div>', {
+							'class': 'm-video-selector-episode',
+							'data-url': element
+						}).text(`Серия ${index+1}`);
+
+						this.slideIndex++;
+						this._videoSelectorWrapper.slick('slickAdd', el.get(0));
+					}
+					$(this._episodeSelector()[0]).click()
+				}
+			}
 
 			class Progress {
 				constructor(parent) {
@@ -272,7 +306,7 @@ $(document).ready(function () {
 						return this.parent._video.currentTime;
 					} else {
 						var newValue = typeof(newValue) == "string" ? parseFloat(newValue) : newValue
-						this.setStorageProgress(this.parent.getSrc(), newValue)
+						this.setStorageProgress(this.parent.src(), newValue)
 
 						const duration = this.parent._video.duration;
 						const newTime = (duration * newValue) / 100;
@@ -287,7 +321,7 @@ $(document).ready(function () {
 
 
 				onLoadMetaData() {
-					const savedTime = this.getStorageProgress(this.parent.getSrc());
+					const savedTime = this.getStorageProgress(this.parent.src());
 					const time = parseFloat(savedTime || 0);
 					if (savedTime) {
 						this.progress(time);
@@ -411,6 +445,7 @@ $(document).ready(function () {
 				}
 			}
 
+			this.switchControls = new SwitchControls(this);
 
 			this.progress = new Progress(this);
 
@@ -422,13 +457,10 @@ $(document).ready(function () {
 				$('*').each(function() {
 					var $el = $(this);
 					var hoverStyles = $el.attr('style') || '';
-					var cssRules = $el.css('pointer-events');
 			
 					if (hoverStyles.includes('hover')) {
 						$el.attr('style', hoverStyles.replace(/:hover.*?{.*?}/g, ''));
 					}
-			
-					$el.css('pointer-events', 'none');
 				});
 			} else {
 				this.volume = new Volume(this);
@@ -438,20 +470,31 @@ $(document).ready(function () {
 
 
 			$(document).on('keydown', (e) => {
-				if (e.keyCode == 39) {
-					this.progress.rewindVideo(10)
-				} else if (e.keyCode == 37) {
-					this.progress.rewindVideo(-10)
-				} else if (e.keyCode == 38) {
-					let vol = this.volume.volume();
-					this.volume.volume(Math.min(vol + 5, 100));
-				} else if (e.keyCode == 40) {
-					let vol = this.volume.volume();
-					this.volume.volume(Math.max(vol - 5, 0));
-				} else if (e.keyCode == 32 || e.keyCode == 75) {
-					this.togglePlay()
-				} else if (e.keyCode == 70) {
-					this.toggleFullscreen()
+				if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Space", "KeyK", "KeyF"].includes(e.code)) {
+					e.preventDefault();
+				}
+
+				switch (e.code) {
+					case 'ArrowRight':
+						this.progress.rewindVideo(10)
+						break;
+					case 'ArrowLeft':
+						this.progress.rewindVideo(-10)
+						break;
+					case 'ArrowUp':
+						vol = this.volume.volume();
+						this.volume.volume(Math.min(vol + 5, 100));
+						break;
+					case 'ArrowDown':
+						vol = this.volume.volume();
+						this.volume.volume(Math.max(vol - 5, 0));
+						break;
+					case 'Space': case 'KeyK':
+						this.togglePlay()
+						break;
+					case 'KeyF':
+						this.toggleFullscreen()
+						break;
 				}
 			});
 
@@ -471,35 +514,17 @@ $(document).ready(function () {
 			this._togglePlayBtn.removeClass('active');
 		}
 		togglePlay() {
-			if (this._video.paused) {
-				this.play();
+			this._video.paused ? this.play() : this.pause()
+		}
+
+		src(value) {
+			if (value === undefined) {
+				return this._video.src
 			} else {
-				this.pause();
+				this._video.src = value
+				this.pause()
+				this.progress.getStorageProgress(this._video.src)
 			}
-		}
-
-		setSrc(src) {
-			this._video.src = src
-			this.pause()
-			this.progress.getStorageProgress(this._video.src)
-		}
-		getSrc() {
-			return this._video.src
-		}
-
-		setList(li) {
-			for (let index = 0; index < li.length; index++) {
-				const element = li[index];
-				
-				var el = $('<div>', {
-					'class': 'm-video-selector-episode',
-					'data-url': element
-				}).text(`Серия ${index+1}`);
-
-				this.slideIndex++;
-				this._videoSelectorWrapper.slick('slickAdd', el.get(0));
-			}
-			$(this._episodeSelector()[0]).click()
 		}
 
 		fullscreen() {
@@ -511,6 +536,7 @@ $(document).ready(function () {
 			} else if (videoElement.msRequestFullscreen) {
 				videoElement.msRequestFullscreen();
 			}
+
 			this._toggleFullscreenBtn.addClass('active');
 		}
 		minimize() {
@@ -521,6 +547,7 @@ $(document).ready(function () {
 			} else if (document.msExitFullscreen) {
 				document.msExitFullscreen();
 			}
+
 			this._toggleFullscreenBtn.removeClass('active');
 		}
 
@@ -573,6 +600,5 @@ $(document).ready(function () {
 		}
 	}
 
-	var player = new MVideo();
-	player.setList(window.videos())
+	window.MVideo = MVideo;
 });

@@ -10,29 +10,24 @@
 	<link rel="stylesheet" href="css/colors.css">
 	<link rel="stylesheet" href="css/base.css">
 
-	<link rel="stylesheet" href="css/libs/slick-theme.css">
-	<link rel="stylesheet" href="css/libs/slick.css">
-	<script src="js/libs/slick.min.js"></script>
+	<!-- <link rel="stylesheet" href="css/libs/slick-theme.css"> -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+	<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 	<link rel="stylesheet" href="css/style.css">
-
-	<script>
-		var videoUrls = ['http://192.168.0.164:8080/video/c43746666796/', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'];
-		window.videos = function() {
-			return videoUrls
-		}
-	</script>
-
-	<script src="js/script.js"></script>
 
 	<title>Document</title>
 </head>
 <body>
-	<div class="m-video-wrapper" id="mVideoWrapper">
+	<div class="m-video-wrapper" id="mVideoWrapper" style="width: 600px; height: 300px;">
 		<video id="m-video" class="m-video" preload="auto" width="640" height="264"></video>
 
 		<div id="mVideoSelectorWrapper" class="m-video-selector">
-			<div class="m-video-selector-episode-list"></div>
+			<select name="" id="" class="m-video-voiceover-select"></select>
+			
+			<div class="m-video-selector-episode-slider">
+				<div class="m-video-selector-episode-list"></div>
+			</div>
 		</div>
 
 		<div class="video-areas">
@@ -144,5 +139,15 @@
 			</button>
 		</div>
 	</div>
+
+	<script src="js/script.js"></script>
+	<script>
+		$(function () {
+			var videoUrls = ['http://192.168.0.164:8080/video/c43746666796/', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', 'http://192.168.0.164:8080/video/c43746666796/', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'];
+
+			var player = new MVideo();
+			player.switchControls.setList(videoUrls);
+		});
+	</script>
 </body>
 </html>

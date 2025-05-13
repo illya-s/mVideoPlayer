@@ -13,18 +13,70 @@
 
 
 .m-video-selector {
+	z-index: 5;
 	position: absolute;
 	inset: 0px 0px auto 0px;
 
 	width: 100%;
-	height: 50px;
+	height: 40px;
+	padding: 5px 1rem;
 
-	background-color: #00000055;
+	display: grid;
+	grid-template-columns: 1fr minmax(200px, 8fr);
+	gap: 1rem;
 }
 
+
+.m-video-voiceover-select {
+	border: none;
+	border-radius: 5px;
+	background-color: var(--bl1-color);
+
+	color: var(--txt-color);
+}
+
+
+.m-video-selector-episode-slider {
+	width: 100%;
+
+	display: block;
+}
 .m-video-selector-episode-list {
-	height: 50px;
+	width: 100%;
+	height: 100%;
+
+	border-radius: 5px;
+	background-color: var(--bl1-color);
 }
+
+.slick-arrow {
+	height: 30px;
+	padding: 5px 7px;
+
+	color: var(--txt-color);
+
+	transition: opacity .2s linear;
+
+	&:hover {
+		opacity: .6;
+	}
+
+	& > svg {
+		width: auto;
+		height: 100%;
+	}
+}
+.slick-slider {
+	display: flex;
+	flex-direction: row;
+}
+.slick-list {
+	width: 100%;
+}
+.slick-track {
+	height: 100%;
+}
+
 .m-video-selector.hidden {
 	opacity: 0;
 	pointer-events: none;
@@ -33,14 +85,11 @@
 .m-video-selector-episode {
 	position: relative;
 
-	width: 150px;
-	height: 50px;
-
-	display: grid;
+	display: grid !important;
 	align-content: center;
 
 	text-align: center;
-	font-size: 1rem;
+	font-size: .75em;
 	color: #FFF;
 	
 	cursor: pointer;
@@ -54,15 +103,14 @@
 
 	&::before {
 		content: "";
-		
-		content: "";
+
 		position: absolute;
 
 		inset: auto 50% 0 50%;
 		transform: translate(-50%, -50%);
 
 		width: 0px;
-		height: 5px;
+		height: 3px;
 
 		border-radius: 10px;
 		background-color: var(--success-color);
@@ -95,7 +143,7 @@
 
 .video-areas {
 	position: absolute;
-	inset: 60px 0 45px 0;
+	inset: 0 0 45px 0;
 
 	display: grid;
 	grid-template-columns: 2fr 6fr 2fr;
