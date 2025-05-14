@@ -7,7 +7,7 @@ $(document).ready(function () {
 		}
 
 		createPlayer() {
-			const wrapper = $('#cont').attr({
+			const wrapper = $(this.element).attr({
 				'class': 'm-video-wrapper',
 				'id': 'mVideoWrapper',
 			})
@@ -265,7 +265,7 @@ $(document).ready(function () {
 
 			this._videoWrapper = build.wrapper;
 
-			if (!this._videoWrapper) {
+			if (this._videoWrapper.length && $.contains(document, this._videoWrapper)) {
 				console.log(this._videoWrapper)
 				throw "Unexpected error!";
 			}
