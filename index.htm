@@ -19,11 +19,13 @@
 	<title>Document</title>
 </head>
 <body>
-	<div class="m-video-wrapper" id="mVideoWrapper" style="width: 600px; height: 300px;">
-		<video id="m-video" class="m-video" preload="auto" width="640" height="264"></video>
+	<div id="cont"></div>
+
+	<!-- <div class="m-video-wrapper" id="mVideoWrapper">
+		<video id="m-video" class="m-video" preload="auto" width="640" height="320"></video>
 
 		<div id="mVideoSelectorWrapper" class="m-video-selector">
-			<select name="" id="" class="m-video-voiceover-select"></select>
+			<select name="" id="mVideoVoiceoverSelect" class="m-video-voiceover-select"></select>
 			
 			<div class="m-video-selector-episode-slider">
 				<div class="m-video-selector-episode-list"></div>
@@ -96,7 +98,7 @@
 			<div class="video-position-cont">
 				<div class="video-current-time" id="mVideoCurrentTime">00:00</div>
 
-				<div id="mVideoProgress" class="video-progress">
+				<div class="video-progress" id="mVideoProgress">
 					<div id="mVideoHoverTime" class="video-hover-time">00:00</div>
 					<div id="mVideoHoverProgress" class="video-hover-progress"></div>
 					<div id="mVideoProgressBar" class="video-progress-bar"></div>
@@ -138,15 +140,31 @@
 				</svg>
 			</button>
 		</div>
-	</div>
+	</div> -->
 
 	<script src="js/script.js"></script>
 	<script>
 		$(function () {
-			var videoUrls = ['http://192.168.0.164:8080/video/c43746666796/', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4', 'http://192.168.0.164:8080/video/c43746666796/', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4'];
+			var data = [
+				{
+					'id': '100',
+					'name': 'softBox',
+					'list': ['http://192.168.0.164:8080/video/c43746666796/']
+				},
+				{
+					'id': '101',
+					'name': 'Google',
+					'list': ['http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4']
+				},
+				{
+					'id': '102',
+					'name': 'BBC',
+					'list': ['http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4']
+				},
+			];
 
 			var player = new MVideo();
-			player.switchControls.setList(videoUrls);
+			player.switchControls.loadData(data);
 		});
 	</script>
 </body>

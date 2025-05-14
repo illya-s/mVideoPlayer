@@ -28,6 +28,8 @@
 
 
 .m-video-voiceover-select {
+	padding: 5px 10px;
+
 	border: none;
 	border-radius: 5px;
 	background-color: var(--bl1-color);
@@ -292,6 +294,7 @@
 .video-fullscreen-btn > .fullscreen,
 .video-volume-btn > .mute {
 	display: block;
+	color: #FFF;
 }
 
 .toggle-play-btn > svg {
