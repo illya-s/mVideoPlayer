@@ -262,11 +262,6 @@ $(document).ready(function () {
 			const build = new Build(elem);
 
 			this._videoWrapper = build.wrapper;
-
-			if (this._videoWrapper.length && $.contains(document, this._videoWrapper)) {
-				console.log(this._videoWrapper)
-				throw "Unexpected error!";
-			}
 			this._video = $("#m-video").get(0);
 
 			this._positionCont = $('.video-position-cont')
