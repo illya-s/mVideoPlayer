@@ -11,8 +11,6 @@ $(document).ready(function () {
 				'class': 'm-video-wrapper',
 				'id': 'mVideoWrapper',
 			})
-			wrapper.width('720px')
-			wrapper.height('480px')
 
 			const video = $('<video>', {
 				'class': 'm-video',
