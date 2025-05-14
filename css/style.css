@@ -32,9 +32,9 @@
 
 	border: none;
 	border-radius: 5px;
-	background-color: var(--bl1-color);
+	background-color: var(--mVideo-bl1-color);
 
-	color: var(--txt-color);
+	color: var(--mVideo-txt-color);
 }
 
 
@@ -48,14 +48,14 @@
 	height: 100%;
 
 	border-radius: 5px;
-	background-color: var(--bl1-color);
+	background-color: var(--mVideo-bl1-color);
 }
 
 .slick-arrow {
 	height: 30px;
 	padding: 5px 7px;
 
-	color: var(--txt-color);
+	color: var(--mVideo-txt-color);
 
 	transition: opacity .2s linear;
 
@@ -92,7 +92,7 @@
 
 	text-align: center;
 	font-size: .75em;
-	color: #FFF;
+	color: var(--mVideo-txt-color);
 	
 	cursor: pointer;
 	user-select: none;
@@ -115,7 +115,7 @@
 		height: 3px;
 
 		border-radius: 10px;
-		background-color: var(--success-color);
+		background-color: var(--mVideo-success-color);
 
 		transition: width .2s linear;
 	}
@@ -134,12 +134,12 @@
 	height: 70%;
 
 	border-radius: 2px;
-	background-color: var(--bl2-color);
+	background-color: var(--mVideo-bl2-color);
 
 	transition: background-color .2s linear;
 }
 .m-video-selector-episode:hover::after {
-	background-color: #FFF;
+	background-color: var(--mVideo-txt-color);
 }
 
 
@@ -218,9 +218,9 @@
 	grid-template-rows: 30px;
 	gap: 1rem;
 
-	/* background-color: var(--bl1-color); */
+	/* background-color: var(--mVideo-bl1-color); */
 
-	color: #FFF;
+	color: var(--mVideo-txt-color);
 	font-size: .85rem;
 }
 
@@ -234,7 +234,7 @@
 	display: grid;
 	place-content: center;
 
-	color: #FFF;
+	color: var(--mVideo-txt-color);
 
 	& > svg {
 		max-width: 20px;
@@ -242,7 +242,7 @@
 }
 .toggle-play-btn, .video-fullscreen-btn {
 	border-radius: 5px;
-	background-color: var(--bl1-color);
+	background-color: var(--mVideo-bl1-color);
 
 	transition: opacity .2s linear;
 
@@ -294,7 +294,7 @@
 .video-fullscreen-btn > .fullscreen,
 .video-volume-btn > .mute {
 	display: block;
-	color: #FFF;
+	color: var(--mVideo-txt-color);
 }
 
 .toggle-play-btn > svg {
@@ -311,7 +311,7 @@
 	gap: 1rem;
 
 	border-radius: 5px;
-	background-color: var(--bl1-color);
+	background-color: var(--mVideo-bl1-color);
 }
 
 .video-current-time, .video-duration {
@@ -325,7 +325,7 @@
 	height: 10px;
 
 	border-radius: 4px;
-	background-color: var(--bl2-color);
+	background-color: var(--mVideo-bl2-color);
 }
 .video-progress-bar, .video-volume-bar, .video-hover-progress {
 	position: absolute;
@@ -334,7 +334,7 @@
 	border-radius: 4px;
 }
 .video-progress-bar, .video-volume-bar {
-	background-color: #FFF;
+	background-color: var(--mVideo-txt-color);
 }
 .video-hover-progress {
 	background-color: #FFFFFF35;
@@ -352,7 +352,7 @@
 	transform: translateX(-50%);
 
 	border-radius: 3px;
-	background-color: var(--bl2-color);
+	background-color: var(--mVideo-bl2-color);
 }
 
 

@@ -1,13 +1,9 @@
 :root {
-	--bg-color: #111827;
-	--hd-color: #0A0A0A;
+	--mVideo-bl1-color: #1F2937;
+	--mVideo-bl2-color: #374151;
 
-	--bl1-color: #1F2937;
-	--bl2-color: #374151;
-	--bl3-color: #0A0A0A;
+	--mVideo-warning-color: #C71B1B;
+	--mVideo-success-color: #75C71B;
 
-	--warning-color: #C71B1B;
-	--success-color: #75C71B;
-
-	--txt-color: #D1D5DB;
+	--mVideo-txt-color: #FFF;
 }
