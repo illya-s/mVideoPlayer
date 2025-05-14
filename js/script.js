@@ -260,8 +260,8 @@ $(document).ready(function () {
 	}
 
 	class MVideo {
-		constructor() {
-			const build = new Build('#cont');
+		constructor(elem) {
+			const build = new Build(elem);
 
 			this._videoWrapper = build.wrapper;
 			this._video = $("#m-video").get(0);
