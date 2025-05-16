@@ -53,6 +53,8 @@
 
 .m-video-wrapper {
 	& .slick-arrow {
+		position: static !important;
+
 		height: 30px;
 		padding: 5px 7px;
 
