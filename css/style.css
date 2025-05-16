@@ -56,6 +56,9 @@
 		height: 30px;
 		padding: 5px 7px;
 
+		border-radius: 0;
+		background-color: transparent;
+
 		color: var(--mVideo-txt-color);
 
 		transition: opacity .2s linear;
@@ -149,7 +152,7 @@
 .video-areas {
 	position: absolute;
 	inset: 0 0 0 0;
-	z-index: 5;
+	z-index: 4;
 
 	display: grid;
 	grid-template-columns: 2fr 6fr 2fr;
@@ -161,6 +164,7 @@
 }
 .video-rewind-arrow {
 	position: relative;
+	z-index: 5;
 
 	opacity: 0;
 	overflow: hidden;
@@ -187,6 +191,7 @@
 	position: absolute;
 	top: 50%; left: 50%;
 	transform: translate(-50%, -50%);
+	z-index: 5;
 	
 	width: 5.5rem;
 	height: 4rem;
@@ -213,6 +218,7 @@
 .video-controls {
 	position: absolute;
 	bottom: 0;
+	z-index: 5;
 
 	width: 100%;
 	padding: 5px 1rem;
