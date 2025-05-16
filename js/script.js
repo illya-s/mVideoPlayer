@@ -298,7 +298,17 @@ $(document).ready(function () {
 						nextArrow: `<div class="nextArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L17 17L3 31" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
 
 						slidesToShow: 6,
-						slidesToScroll: 6
+						slidesToScroll: 6,
+
+						responsive: [
+							{
+								breakpoint: 720,
+								settings: {
+									slidesToShow: 4,
+									slidesToScroll: 4,
+								}
+							},
+						]
 					});
 
 
