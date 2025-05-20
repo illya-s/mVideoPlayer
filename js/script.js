@@ -447,9 +447,7 @@ $(document).ready(function () {
 						this._loader.hide();
 					});
 
-					console.log('isMobileDevice:', this.isMobileDevice)
-
-					if (!this.isMobileDevice) {
+					if (!this.parent.isMobileDevice()) {
 						this._progressBtn.on('mousedown', (e) => {
 							const progressWidth = this._progressBtn.width();
 			
