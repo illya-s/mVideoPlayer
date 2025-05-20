@@ -932,7 +932,7 @@ $(document).ready(function () {
 		}
 
 		isMobileDevice() {
-			return window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+			return /Mobi|Android/i.test(navigator.userAgent);
 		}
 	}
 
