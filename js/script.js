@@ -290,42 +290,13 @@ $(document).ready(function () {
 
 
 					this.slideIndex = 0;
-					if (this.parent._videoWrapper.width() >= 600) {
-						this.slideLen = 6
-					} else if (this.parent._videoWrapper.width() >= 420) {
-						this.slideLen = 4
-					} else {
-						this.slideLen = 2
-					}
+					this.currentSlickMode = null;
+					this.initEpisodeSlider()
 
-					this._videoSelectorWrapper.slick({
-						infinite: false,
-
-						arrows: true,
-						prevArrow: `<div class="prevArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 31L4 17L18 3" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
-						nextArrow: `<div class="nextArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L17 17L3 31" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
-
-						slidesToShow: this.slideLen,
-						slidesToScroll: this.slideLen,
-
-						// responsive: [
-						// 	{
-						// 		breakpoint: 720,
-						// 		settings: {
-						// 			slidesToShow: 4,
-						// 			slidesToScroll: 4,
-						// 		}
-						// 	},
-						// 	{
-						// 		breakpoint: 480,
-						// 		settings: {
-						// 			slidesToShow: 2,
-						// 			slidesToScroll: 2,
-						// 		}
-						// 	}
-						// ]
+					const observer = new ResizeObserver((entries) => {
+						this.updateEpisodeSlider();
 					});
-
+					observer.observe(this.parent._videoWrapper[0]);
 
 					this._episodeLastSelector = null;
 					var isDragging = false;
@@ -361,6 +332,45 @@ $(document).ready(function () {
 						const obj = this._data.find(obj => obj.id === id)
 						this.setList(obj.list)
 					})
+				}
+
+
+				initEpisodeSlider() {
+					if (this.parent._videoWrapper.width() >= 600) {
+						this.slideLen = 6
+					} else if (this.parent._videoWrapper.width() >= 420) {
+						this.slideLen = 4
+					} else {
+						this.slideLen = 2
+					}
+
+					this._videoSelectorWrapper.slick({
+						infinite: false,
+
+						arrows: true,
+						prevArrow: `<div class="prevArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 31L4 17L18 3" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
+						nextArrow: `<div class="nextArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L17 17L3 31" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
+
+						slidesToShow: this.slideLen,
+						slidesToScroll: this.slideLen,
+					});
+
+					this._videoVoiceoverSelect.change()
+				}
+
+				updateEpisodeSlider() {
+					const containerWidth = this.parent._videoWrapper.width();
+					let newMode;
+
+					if (containerWidth >= 720) newMode = 'desktop';
+					else if (containerWidth >= 480) newMode = 'tablet';
+					else newMode = 'mobile';
+
+					if (newMode !== this.currentSlickMode) {
+						this._videoSelectorWrapper.slick('unslick');
+						this._videoSelectorWrapper.html('')
+						this.initEpisodeSlider();
+					}
 				}
 
 
