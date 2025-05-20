@@ -290,6 +290,14 @@ $(document).ready(function () {
 
 
 					this.slideIndex = 0;
+					if (this.parent._videoWrapper.width() >= 600) {
+						this.slideLen = 6
+					} else if (this.parent._videoWrapper.width() >= 420) {
+						this.slideLen = 4
+					} else {
+						this.slideLen = 2
+					}
+
 					this._videoSelectorWrapper.slick({
 						infinite: false,
 
@@ -297,25 +305,25 @@ $(document).ready(function () {
 						prevArrow: `<div class="prevArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 31L4 17L18 3" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
 						nextArrow: `<div class="nextArrow"><svg width="21" height="34" viewBox="0 0 21 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L17 17L3 31" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>`,
 
-						slidesToShow: 6,
-						slidesToScroll: 6,
+						slidesToShow: this.slideLen,
+						slidesToScroll: this.slideLen,
 
-						responsive: [
-							{
-								breakpoint: 720,
-								settings: {
-									slidesToShow: 4,
-									slidesToScroll: 4,
-								}
-							},
-							{
-								breakpoint: 480,
-								settings: {
-									slidesToShow: 2,
-									slidesToScroll: 2,
-								}
-							}
-						]
+						// responsive: [
+						// 	{
+						// 		breakpoint: 720,
+						// 		settings: {
+						// 			slidesToShow: 4,
+						// 			slidesToScroll: 4,
+						// 		}
+						// 	},
+						// 	{
+						// 		breakpoint: 480,
+						// 		settings: {
+						// 			slidesToShow: 2,
+						// 			slidesToScroll: 2,
+						// 		}
+						// 	}
+						// ]
 					});
 
 
