@@ -308,6 +308,13 @@ $(document).ready(function () {
 									slidesToScroll: 4,
 								}
 							},
+							{
+								breakpoint: 480,
+								settings: {
+									slidesToShow: 2,
+									slidesToScroll: 2,
+								}
+							}
 						]
 					});
 
@@ -749,12 +756,14 @@ $(document).ready(function () {
 				this._volumeCont.hide();
 				this._positionCont.css('grid-template-columns', 'max-content auto max-content')
 
-				$('*').each(function() {
-					var $el = $(this);
-					var hoverStyles = $el.attr('style') || '';
+				$('*').each((e) => {
+					var $el = $(e.target);
+					var styles = $el.attr('style') || '';
 			
-					if (hoverStyles.includes('hover')) {
-						$el.attr('style', hoverStyles.replace(/:hover.*?{.*?}/g, ''));
+					$el.css('pointer-events', 'none')
+
+					if (styles.includes('hover')) {
+						$el.attr('style', styles.replace(/:hover.*?{.*?}/g, ''));
 					}
 				});
 			} else {
