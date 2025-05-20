@@ -447,69 +447,70 @@ $(document).ready(function () {
 						this._loader.hide();
 					});
 
-					this._progressBtn.on('mousedown', (e) => {
-						const progressWidth = this._progressBtn.width();
-		
-						const updateProgress = (eMove) => {
-							const rect = this._progressBtn[0].getBoundingClientRect();
-							let offsetX = eMove.clientX - rect.left;
-					
-							offsetX = Math.max(0, Math.min(offsetX, progressWidth));
-					
-							const pos = (offsetX * 100) / progressWidth;
+					if (!this.isMobileDevice) {
+						this._progressBtn.on('mousedown', (e) => {
+							const progressWidth = this._progressBtn.width();
+			
+							const updateProgress = (eMove) => {
+								const rect = this._progressBtn[0].getBoundingClientRect();
+								let offsetX = eMove.clientX - rect.left;
+						
+								offsetX = Math.max(0, Math.min(offsetX, progressWidth));
+						
+								const pos = (offsetX * 100) / progressWidth;
 
-							this.progress(pos)
-						};
+								this.progress(pos)
+							};
 
-						updateProgress(e);
-		
-						$(document).on('mousemove.volumeControl', updateProgress);
-						$(document).on('mouseup.volumeControl', () => {
-							$(document).off('.volumeControl');
-						});
-					})
-					this._progressBtn.on('touchstart', (e) => {
-						const touch = e.originalEvent.touches[0];
-						const progressWidth = this._progressBtn.width();
-					
-						const updateProgress = (touchMoveEvent) => {
-							const rect = this._progressBtn[0].getBoundingClientRect();
-							const moveTouch = touchMoveEvent.touches[0];
-							let offsetX = moveTouch.clientX - rect.left;
-					
-							offsetX = Math.max(0, Math.min(offsetX, progressWidth));
-							const pos = (offsetX * 100) / progressWidth;
-							this.progress(pos);
-						};
-					
-						$(document).on('touchmove.progressTouch', updateProgress);
-						$(document).on('touchend.progressTouch', () => {
-							$(document).off('.progressTouch');
-						});
-					
-						updateProgress({ touches: [touch] });
-						e.preventDefault();
-					});
+							updateProgress(e);
+			
+							$(document).on('mousemove.volumeControl', updateProgress);
+							$(document).on('mouseup.volumeControl', () => {
+								$(document).off('.volumeControl');
+							});
+						})
 
-					this._progressBtn.on('mousemove', (e) => {
-						const offset = this._progressBtn.offset();
-						const relativeX = e.pageX - offset.left;
-						const progressWidth = this._progressBtn.width();
-						const duration = this.parent._video.duration;
-		
-						const hoverTime = (relativeX / progressWidth) * duration;
-		
-						this._hover_progress.width(relativeX)
-						this._hover_time.text(this.formatTime(hoverTime));
-						this._hover_time.css({
-							left: relativeX + 'px',
-							display: 'block'
+						this._progressBtn.on('mousemove', (e) => {
+							const offset = this._progressBtn.offset();
+							const relativeX = e.pageX - offset.left;
+							const progressWidth = this._progressBtn.width();
+							const duration = this.parent._video.duration;
+			
+							const hoverTime = (relativeX / progressWidth) * duration;
+			
+							this.setHoveProgress(relativeX, hoverTime)
 						});
-					});
-					this._progressBtn.on('mouseleave', () => {
-						this._hover_time.hide();
-						this._hover_progress.width(0)
-					});
+						this._progressBtn.on('mouseleave', (e) => {
+							this.hideHoverProgress();
+						});
+					} else {
+						this._hover_time.remove();
+						this._hover_progress.remove();
+
+						this._progressBtn.on('touchstart', (e) => {
+							const touch = e.originalEvent.touches[0];
+							const progressWidth = this._progressBtn.width();
+
+							const updateProgress = (touchMoveEvent) => {
+								const rect = this._progressBtn[0].getBoundingClientRect();
+								const moveTouch = touchMoveEvent.touches[0];
+								let offsetX = moveTouch.clientX - rect.left;
+						
+								offsetX = Math.max(0, Math.min(offsetX, progressWidth));
+								const pos = (offsetX * 100) / progressWidth;
+
+								this.progress(pos);
+							};
+						
+							$(document).on('touchmove.progressTouch', updateProgress);
+							$(document).on('touchend.progressTouch', () => {
+								$(document).off('.progressTouch');
+							});
+						
+							updateProgress({ touches: [touch] });
+							e.preventDefault();
+						});
+					}
 
 					this._rewind_area.on('dblclick', (e) => {
 						this.rewindVideo(parseInt($(e.target).data('val')))
@@ -534,6 +535,19 @@ $(document).ready(function () {
 					$(window).on('resize', () => {
 						this.onTimeUpdate();
 					});
+				}
+
+				setHoveProgress(relativeX, hoverTime) {
+					this._hover_progress.width(relativeX);
+					this._hover_time.text(this.formatTime(hoverTime));
+					this._hover_time.css({
+						left: relativeX + 'px',
+						display: 'block'
+					});
+				}
+				hideHoverProgress() {
+					this._hover_time.hide();
+					this._hover_progress.width(0)
 				}
 
 				onTimeUpdate() {
@@ -777,8 +791,6 @@ $(document).ready(function () {
 				$('*').each((e) => {
 					var $el = $(e.target);
 					var styles = $el.attr('style') || '';
-			
-					$el.css('pointer-events', 'none')
 
 					if (styles.includes('hover')) {
 						$el.attr('style', styles.replace(/:hover.*?{.*?}/g, ''));
