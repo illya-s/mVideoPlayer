@@ -13,7 +13,7 @@
 
 
 .m-video-selector {
-	z-index: 5;
+	z-index: 6;
 	position: absolute;
 	inset: 0px 0px auto 0px;
 
@@ -191,6 +191,18 @@
 
 
 
+.video-big-play-btn-wrapper {
+	z-index: 5;
+	position: absolute;
+	inset: 0 0 0 0;
+
+	background-color: #000;
+
+	&.active {
+		display: none;
+	}
+}
+
 .video-big-play-btn, .video-loader {
 	position: absolute;
 	top: 50%; left: 50%;
@@ -222,7 +234,7 @@
 .video-controls {
 	position: absolute;
 	bottom: 0;
-	z-index: 5;
+	z-index: 6;
 
 	width: 100%;
 	padding: 5px 1rem;

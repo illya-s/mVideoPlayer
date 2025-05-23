@@ -80,6 +80,11 @@ $(document).ready(function () {
 
 			// Play Button
 
+			const playBtnWrapper = $('<div>', {
+				'id': 'mVideoBigPlayBtnWrapper',
+				'class': 'video-big-play-btn-wrapper'
+			});
+
 			const playBtn = $('<div>', {
 				'id': 'mVideoBigPlayBtn',
 				'class': 'toggle-play-btn video-big-play-btn'
@@ -87,7 +92,8 @@ $(document).ready(function () {
 
 			playBtn.append(this.createPauseSVG());
 			playBtn.append(this.createPlaySVG());
-			wrapper.append(playBtn);
+			playBtnWrapper.html(playBtn)
+			wrapper.append(playBtnWrapper);
 
 			// Video Loader
 			wrapper.append(this.createLoader());
@@ -266,7 +272,7 @@ $(document).ready(function () {
 
 			this._positionCont = $('.video-position-cont')
 
-			this._togglePlayBtn = $('#mVideoTogglePlayBtn, #mVideoBigPlayBtn, #mVideoTogglePlayArea');
+			this._togglePlayBtn = $('#mVideoTogglePlayBtn, #mVideoBigPlayBtnWrapper, #mVideoTogglePlayArea');
 			this._togglePlayArea = $('#mVideoTogglePlayArea')
 
 			this._volumeCont = $('.video-volume-cont')
