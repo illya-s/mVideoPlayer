@@ -809,7 +809,10 @@ $(document).ready(function () {
 			this.initAutoHideControls();
 
 
-			$(document).on('keydown', (e) => {
+			this._videoWrapper.on('keydown', (e) => {
+				if ($(e.target).closest(this._videoWrapper).length === 0) {
+ 					return;
+				}
 				if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Space", "KeyK", "KeyF"].includes(e.code)) {
 					e.preventDefault();
 				}
