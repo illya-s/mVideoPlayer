@@ -8,8 +8,9 @@ $(document).ready(function () {
 
 		createPlayer() {
 			const wrapper = $(this.element).attr({
-				'class': 'm-video-wrapper',
-				'id': 'mVideoWrapper',
+				class: 'm-video-wrapper',
+				id: 'mVideoWrapper',
+				tabindex: 0
 			})
 
 			const video = $('<video>', {
@@ -809,8 +810,9 @@ $(document).ready(function () {
 			this.initAutoHideControls();
 
 
-			this._videoWrapper.on('keydown', (e) => {
-				if (!$(e.target).closest(this._videoWrapper).length) {
+			$(document).on('keydown', (e) => {
+				console.log($(e.target).closest(this._videoWrapper[0]), e.target, this._videoWrapper.get(0))
+				if (!$(e.target).closest(this._videoWrapper.get(0)).length) {
  					return;
 				}
 				const keys = [
