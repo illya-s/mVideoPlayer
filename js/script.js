@@ -810,10 +810,19 @@ $(document).ready(function () {
 
 
 			this._videoWrapper.on('keydown', (e) => {
-				if ($(e.target).closest(this._videoWrapper).length === 0) {
+				if (!$(e.target).closest(this._videoWrapper).length) {
  					return;
 				}
-				if (["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "Space", "KeyK", "KeyF"].includes(e.code)) {
+				const keys = [
+					"ArrowRight",
+					"ArrowLeft",
+					"ArrowUp",
+					"ArrowDown",
+					"Space",
+					"KeyK",
+					"KeyF"
+				]
+				if (keys.includes(e.code)) {
 					e.preventDefault();
 				}
 
