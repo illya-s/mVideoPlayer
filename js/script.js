@@ -332,6 +332,10 @@ $(document).ready(function () {
 
 					$(document).on('fullscreenchange', () => {
 						this._videoSelectorWrapper.slick('setPosition');
+
+						if (document.fullscreenElement && this.parent._video.paused && !this.parent._video._pausedManually) {
+							this.parent._video.play();
+						}
 					});
 
 					this._videoVoiceoverSelect.on('change', (e) => {
@@ -811,7 +815,6 @@ $(document).ready(function () {
 
 
 			$(document).on('keydown', (e) => {
-				console.log($(e.target).closest(this._videoWrapper[0]), e.target, this._videoWrapper.get(0))
 				if (!$(e.target).closest(this._videoWrapper.get(0)).length) {
  					return;
 				}
