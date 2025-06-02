@@ -332,10 +332,6 @@ $(document).ready(function () {
 
 					$(document).on('fullscreenchange', () => {
 						this._videoSelectorWrapper.slick('setPosition');
-
-						if (document.fullscreenElement && this.parent._video.paused && !this.parent._video._pausedManually) {
-							this.parent._video.play();
-						}
 					});
 
 					this._videoVoiceoverSelect.on('change', (e) => {
@@ -852,6 +848,12 @@ $(document).ready(function () {
 					case 'KeyF':
 						this.toggleFullscreen()
 						break;
+				}
+			});
+
+			$(document).on('fullscreenchange', () => {
+				if (document.fullscreenElement && this._video.paused && !this._video._pausedManually) {
+					this._video.play();
 				}
 			});
 
